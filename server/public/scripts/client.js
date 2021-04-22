@@ -10,6 +10,8 @@ function addClickHandlers() {
   // TODO - Add code for edit & delete buttons
   // Listener for DELETE song
   $('#bookShelf').on('click', '.delete-book', deleteBookHandler);
+  $('#bookShelf').on('click', '.read-book', readBookHandler);
+
 }
 
 function handleSubmit() {
@@ -60,7 +62,9 @@ function renderBooks(books) {
       <tr>
         <td>${book.title}</td>
         <td>${book.author}</td>
+        <td>${book.isRead}</td>
         <td>
+        <button class="read-book" data-id="${book.id}">Mark As Read</button>
         <button class="delete-book" data-id="${book.id}">Delete</button>
         </td>
       </tr>
@@ -75,6 +79,11 @@ function deleteBookHandler() {
   deleteBook($(this).data("id"))
 }
 
+function readBookHandler() {
+  readBook($(this).data("id"),"");
+}
+
+
 // DELETE AJAX call for deleting a book
 function deleteBook(bookId) {
   $.ajax({
@@ -88,4 +97,21 @@ function deleteBook(bookId) {
   .catch( function(error) {
       alert('Error on deleting book.', error);
   });
+}
+
+function readBook(readId){
+    $.ajax({
+      method: 'PUT',
+      url: `/books/${readId}`,
+      data: {
+        direction: voteDirection
+      }
+    })
+    .then( function(response) {
+      getAllSongs();
+    })
+    .catch( function(error) {
+      alert('Error on vote on song', error);
+    })
+  }
 }
