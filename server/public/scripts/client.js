@@ -103,15 +103,13 @@ function readBook(readId){
     $.ajax({
       method: 'PUT',
       url: `/books/${readId}`,
-      data: {
-        direction: voteDirection
-      }
+      data: readId
     })
     .then( function(response) {
-      getAllSongs();
+      refreshBooks();
     })
     .catch( function(error) {
       alert('Error on vote on song', error);
     })
   }
-}
+
