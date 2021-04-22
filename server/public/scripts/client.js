@@ -8,8 +8,9 @@ function addClickHandlers() {
   $('#submitBtn').on('click', handleSubmit);
 
   // TODO - Add code for edit & delete buttons
-  // Listener for DELETE song
+  // Listener for DELETE book
   $('#bookShelf').on('click', '.delete-book', deleteBookHandler);
+  //Listener for edit book
   $('#bookShelf').on('click', '.read-book', readBookHandler);
 
 }
@@ -80,7 +81,7 @@ function deleteBookHandler() {
 }
 
 function readBookHandler() {
-  readBook($(this).data("id"),"");
+  readBook($(this).data("id"));
 }
 
 

@@ -38,7 +38,29 @@ router.post('/', (req, res) => {
 // Updates a book to show that it has been read
 // Request must include a parameter indicating what book to update - the id
 // Request body must include the content to update - the status
+router.put('/:id', (req, res) => {
+  console.log(req.body);
+  let reqId = req.params.id;
 
+  // change to read will come from the request body
+  let readId = req.body.readId;
+  let sqlText = '';
+
+  // Logic for body of request...
+  if (readId) {
+      sqlText = `UPDATE "books" SET "isRead"='read' WHERE "id"=$1`;
+  // Send the request to the DB...
+  // Since we're only using 1 query parameter, we only have
+  // one object in our array.
+  }
+  pool.query(sqlText, [readId]).then((resDB) => {
+      // console.log(resDB); // just to verify the result is received.
+      res.sendStatus(200); // server must always send a response.
+  }).catch((error) => {
+      // console.log(error);
+      res.sendStatus(500);
+  })
+});
 
 // TODO - DELETE 
 // Removes a book to show that it has been read
